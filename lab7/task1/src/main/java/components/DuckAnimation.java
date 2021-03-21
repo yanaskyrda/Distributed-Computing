@@ -16,10 +16,8 @@ public class DuckAnimation extends JLabel implements MouseListener {
     private int directionX;
     private int directionY;
     private int delay;
-    private int currX;
-    private int currY;
-    int parentWidth;
-    int parentHeight;
+    private volatile int currX;
+    private volatile int currY;
     private ScheduledExecutorService executor;
 
 
