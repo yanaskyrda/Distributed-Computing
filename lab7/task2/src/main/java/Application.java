@@ -13,13 +13,14 @@ public class Application extends JFrame {
     private List<DuckAnimation> ducks = new ArrayList<>();
     private HunterAnimation hunter;
 
-    private void initializeFrame(JFrame frame, JPanel panel) throws IOException {
+    private void initializeFrame(JFrame frame, JPanel panel) {
         frame.setContentPane(panel);
+        setLayout(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setTitle("abys mage hunt <3");
-        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setSize(panel.getPreferredSize());
+        frame.setTitle("abyss mage hunt <3");
         frame.setVisible(true);
     }
 

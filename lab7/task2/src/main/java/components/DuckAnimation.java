@@ -50,8 +50,6 @@ public class DuckAnimation extends JLabel implements Runnable {
     }
 
     private void performMovement() {
-        Container parent = getParent();
-
         int nextX = getLocation().x + (deltaX * directionX);
         if (nextX < 0) {
             nextX = 0;
@@ -111,13 +109,12 @@ public class DuckAnimation extends JLabel implements Runnable {
     public void run() {
         executor.shutdownNow();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Container parent = this.getParent();
         parent.remove(this);
-        parent.revalidate();
         parent.repaint();
     }
 }

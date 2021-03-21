@@ -51,8 +51,8 @@ public class HunterAnimation extends JLabel implements KeyListener {
             directionX *= -1;
         }
 
-        this.currX = nextX;
         setLocation(nextX, parentHeight - 3 * this.getHeight() / 4);
+        this.currX = nextX;
     }
 
     public void startAction() {

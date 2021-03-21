@@ -67,9 +67,9 @@ public class DuckAnimation extends JLabel implements MouseListener {
             directionY *= -1;
         }
 
+        setLocation(nextX, nextY);
         this.currX = nextX;
         this.currY = nextY;
-        setLocation(nextX, nextY);
     }
 
     public void startAction() {
@@ -99,7 +99,6 @@ public class DuckAnimation extends JLabel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         Container parent = this.getParent();
         parent.remove(this);
-        parent.revalidate();
         parent.repaint();
         executor.shutdownNow();
     }
