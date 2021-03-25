@@ -7,33 +7,34 @@ import java.util.concurrent.atomic.AtomicBoolean;
 class CellsMap {
     private List<List<Integer>> primary;
     private List<List<Integer>> secondary;
-    private AtomicBoolean wasRead;
-    private AtomicBoolean wasWritten;
+    private AtomicBoolean alreadyRead;
+    private AtomicBoolean alreadyWritten;
 
     CellsMap() {
-        primary = new ArrayList<>(new ArrayList<>());;
-        secondary = new ArrayList<>(new ArrayList<>());;
-        wasRead = new AtomicBoolean(true);
-        wasWritten = new AtomicBoolean(false);
+        primary = new ArrayList<>(new ArrayList<>());
+        ;
+        secondary = new ArrayList<>(new ArrayList<>());
+        alreadyRead = new AtomicBoolean(true);
+        alreadyWritten = new AtomicBoolean(false);
     }
 
     void putInSecondary(List<List<Integer>> data) {
-        while (!wasRead.get()) {
+        while (!alreadyRead.get()) {
             Thread.yield();
         }
         primary.clear();
         primary.addAll(secondary);
         secondary = data;
-        wasRead.set(false);
-        wasWritten.set(true);
+        alreadyRead.set(false);
+        alreadyWritten.set(true);
     }
 
     List<List<Integer>> getFromPrimary() {
-        while (!wasWritten.get()) {
+        while (!alreadyWritten.get()) {
             Thread.yield();
         }
-        wasWritten.set(false);
-        wasRead.set(true);
+        alreadyWritten.set(false);
+        alreadyRead.set(true);
         return primary;
     }
 }

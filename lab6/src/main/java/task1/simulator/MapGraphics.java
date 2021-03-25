@@ -10,8 +10,7 @@ public class MapGraphics extends JPanel implements Runnable {
     private int cellSize;
     private List<List<Integer>> field;
     private CellsMap cellsMap;
-    private List<Color> colors = Arrays.asList(Color.white,
-            Color.black, Color.green, Color.cyan, Color.red, Color.orange);
+    private List<Color> colors = Arrays.asList(Color.white, Color.orange);
 
     MapGraphics(CellsMap cellsMap, int cellSize) {
         field = new ArrayList<>(new ArrayList<>());
@@ -27,7 +26,7 @@ public class MapGraphics extends JPanel implements Runnable {
                 if (index > Manager.THREADS_AMOUNT) {
                     index = Manager.THREADS_AMOUNT;
                 }
-                g.setColor((field.get(i).get(j) != 0) ? colors.get(index) : colors.get(0));
+                g.setColor((field.get(i).get(j) != 0) ? colors.get(1) : colors.get(0));
                 g.fillRect(j * cellSize, i * cellSize, (j + 1) * cellSize, (i + 1) * cellSize);
             }
         }

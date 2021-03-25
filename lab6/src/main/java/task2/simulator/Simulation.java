@@ -31,27 +31,6 @@ public class Simulation implements Runnable {
         return i >= 0 && i < map.size() && j >= 0 && j < map.get(0).size();
     }
 
-    private int countFriendlyNeighbors(int i, int j) {
-        int result = 0;
-        List<Integer> shifts = Arrays.asList(-1, 0, 1);
-        for (int shiftByX : shifts) {
-            for (int shiftByY : shifts) {
-                if (shiftByX == 0 && shiftByY == 0) {
-                    continue;
-                }
-
-                int x = i + shiftByX;
-                int y = j + shiftByY;
-                if (insideField(x, y)) {
-                    if (map.get(x).get(y).equals(map.get(i).get(j))) {
-                        result++;
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     private List<Integer> neighborsAmountByCivilization(int i, int j) {
         List<Integer> neighbors = Arrays.asList(new Integer[Manager.CIVILIZATION_NUMBER]);
         for (int k = 0; k < neighbors.size(); k++) {

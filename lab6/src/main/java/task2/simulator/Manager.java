@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Manager {
     static final int CIVILIZATION_NUMBER = 3;
-    static final int MAP_SIZE = 50;
+    private static final int MAP_SIZE = 50;
     static final int THREADS_AMOUNT = 5;
     static final int TASK_SIZE = 10;
     private int cellSize;
