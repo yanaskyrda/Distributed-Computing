@@ -52,7 +52,7 @@ public class Simulation implements Runnable {
         return result;
     }
 
-    private List<Integer> countAllNeighbors(int i, int j) {
+    private List<Integer> neighborsAmountByCivilization(int i, int j) {
         List<Integer> neighbors = Arrays.asList(new Integer[Manager.CIVILIZATION_NUMBER]);
         for (int k = 0; k < neighbors.size(); k++) {
             neighbors.set(k, 0);
@@ -80,24 +80,19 @@ public class Simulation implements Runnable {
         List<List<Integer>> newMap = new ArrayList<>(map);
         for (int i = 0; i < rowsAmount; i++) {
             for (int j = 0; j < columnsAmount; j++) {
-                if (map.get(i).get(j) == 0) {
-                    List<Integer> neighbors = countAllNeighbors(i, j);
-                    int civil = -1;
-                    int neighborsAmount = 0;
-                    for (int k = 0; k < neighbors.size(); ++k) {
-                        if (neighbors.get(k) > neighborsAmount) {
-                            neighborsAmount = neighbors.get(k);
-                            civil = k;
-                        }
+                List<Integer> neighbors = neighborsAmountByCivilization(i, j);
+                int civilIndex = -1;
+                int neighborsAmount = 0;
+                for (int k = 0; k < neighbors.size(); ++k) {
+                    if (neighbors.get(k) > neighborsAmount) {
+                        neighborsAmount = neighbors.get(k);
+                        civilIndex = k;
                     }
-                    if (civil != -1 && neighborsAmount == 3) {
-                        newMap.get(i).set(j, civil + 1);
-                    }
+                }
+                if (civilIndex != -1 && neighborsAmount == 3) {
+                    newMap.get(i).set(j, civilIndex + 1);
                 } else {
-                    int neighborsAmount = countFriendlyNeighbors(i, j);
-                    if (neighborsAmount < 2 || neighborsAmount > 3) {
-                        newMap.get(i).set(j, 0);
-                    }
+                    newMap.get(i).set(j, 0);
                 }
             }
         }
