@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE map SYSTEM "map.dtd">
+<map><country countryName="Germany" id="country1"><city cityName="Berlin" cityid="id1" countryId="country1" population="123456"/><city cityName="Bremen" cityid="id2" countryId="country1" population="1111111"/></country><country countryName="Poland" id="country2"><city cityName="Krakow" cityid="id3" countryId="country2" population="356736"/></country></map>
