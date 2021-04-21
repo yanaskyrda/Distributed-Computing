@@ -22,7 +22,7 @@ public class MapHandler extends DefaultHandler {
     private Object currObject;
 
     @Override
-    public void characters(char[] ch, int start, int length){
+    public void characters(char[] ch, int start, int length) {
         elementValue = new String(ch, start, length);
     }
 
@@ -32,7 +32,7 @@ public class MapHandler extends DefaultHandler {
     }
 
     @Override
-    public void startElement(String uri, String lName, String qName, Attributes attr){
+    public void startElement(String uri, String lName, String qName, Attributes attr) {
         switch (qName) {
             case COUNTRY:
                 Country country = new Country();
@@ -46,7 +46,7 @@ public class MapHandler extends DefaultHandler {
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName){
+    public void endElement(String uri, String localName, String qName) {
         setField(qName);
     }
 
@@ -137,7 +137,7 @@ public class MapHandler extends DefaultHandler {
         }
     }
 
-    void setField(String qName, String attribute){
+    void setField(String qName, String attribute) {
         switch (qName) {
             case COUNTRY:
                 Country country = new Country();

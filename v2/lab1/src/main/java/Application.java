@@ -264,10 +264,10 @@ public class Application extends JFrame {
         }
     }
 
-    private static boolean changeCountry(Country c) {
+    private static boolean changeCountry(Country country) {
         var newName = textCountryName.getText();
         if (map.getCountry(newName) == null) {
-            map.rename(c, newName);
+            map.rename(country, newName);
             return true;
         }
         fillCountryFields();
@@ -275,18 +275,18 @@ public class Application extends JFrame {
         return false;
     }
 
-    private static boolean changeCity(City c) {
-        var cnt = map.getCountry(textCityCountryName.getText());
-        if (cnt == null) {
+    private static boolean changeCity(City city) {
+        var currCountry = map.getCountry(textCityCountryName.getText());
+        if (currCountry == null) {
             fillCityFields();
             JOptionPane.showMessageDialog(null, "Error: no such country!");
             return false;
         }
         var newName = textCityName.getText();
         if (map.getCity(newName) == null)
-            map.rename(c, newName);
-        map.transferCity(c, cnt);
-        c.setPopulation(Integer.parseInt(textCityPopulation.getText()));
+            map.rename(city, newName);
+        map.transferCity(city, currCountry);
+        city.setPopulation(Integer.parseInt(textCityPopulation.getText()));
         return true;
     }
 

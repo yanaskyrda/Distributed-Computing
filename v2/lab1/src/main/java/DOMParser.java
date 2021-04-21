@@ -35,16 +35,14 @@ public class DOMParser {
         }
     }
 
-    private static String getChildValue(Element element, String name) {
-        Element child = (Element) element.getElementsByTagName(name).item(0);
-        if (child == null) {
-            return "";
-        }
-        Node node = child.getFirstChild();
-        if (node != null) {
-            return node.getNodeValue();
-        } else {
-            return null;
+    private static void setFieldAndAttributes(Node node, MapHandler mapHandler) {
+        Element e = (Element) node;
+        mapHandler.setField(e.getTagName(), null);
+        //mapHandler.setField("country", null);
+        var attributes = e.getAttributes();
+        for (int j = 0; j < attributes.getLength(); j++) {
+            mapHandler.setElementValue(attributes.item(j).getNodeValue());
+            mapHandler.setField(attributes.item(j).getNodeName());
         }
     }
 
@@ -57,29 +55,17 @@ public class DOMParser {
         doc.getDocumentElement().normalize();
 
         MapHandler mapHandler = new MapHandler();
-        NodeList nodes = doc.getElementsByTagName("country");
+        Node parentNode = doc.getChildNodes().item(1);
+        NodeList nodeList = parentNode.getChildNodes();
 
-        for(int i = 0; i < nodes.getLength(); ++i) {
-            mapHandler.setField("country", null);
-            Element e = (Element) nodes.item(i);
-            var attributes = e.getAttributes();
-            for (int j = 0; j < attributes.getLength(); j++) {
-                mapHandler.setElementValue( attributes.item(j).getNodeValue());
-                mapHandler.setField(attributes.item(j).getNodeName());
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            setFieldAndAttributes(node, mapHandler);
+            NodeList childNodes = node.getChildNodes();
+            for (int j = 0; j < childNodes.getLength(); j++) {
+                setFieldAndAttributes(childNodes.item(j), mapHandler);
             }
         }
-
-        nodes = doc.getElementsByTagName("city");
-        for(int i =0; i < nodes.getLength(); i++) {
-            Element e = (Element) nodes.item(i);
-            mapHandler.setField("city", null);
-            var attributes = e.getAttributes();
-            for (int j = 0; j < attributes.getLength(); j++) {
-                mapHandler.setElementValue( attributes.item(j).getNodeValue());
-                mapHandler.setField(attributes.item(j).getNodeName());
-            }
-        }
-
         return mapHandler.getMap();
     }
 
@@ -109,16 +95,10 @@ public class DOMParser {
         }
         Source domSource = new DOMSource(doc);
         Result fileResult = new StreamResult(new File(path));
-        TransformerFactory tfactory = TransformerFactory.newInstance();
-        Transformer transformer = tfactory.newTransformer();
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "map.dtd");
         transformer.transform(domSource, fileResult);
-    }
-
-    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, TransformerException {
-        var map = parse("src/main/java/mod2lab1/map.xml");
-        var city = new City("id10", "c1", "Hamburg", 43456);
-        write(map, "src/main/java/map.xml");
     }
 }
