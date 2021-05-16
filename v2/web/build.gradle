@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'lab6'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.7.1'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+    compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"
+    compile "jstl:jstl:1.2"
+    compile "org.projectlombok:lombok:1.18.20"
+    compile "org.postgresql:postgresql:42.2.19"
+
+    implementation group: 'org.apache.maven.plugins', name: 'maven-compiler-plugin', version: '3.8.1'
+    implementation group: 'org.apache.maven.plugins', name: 'maven-war-plugin', version: '3.3.1'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+test {
+    useJUnitPlatform()
+}
